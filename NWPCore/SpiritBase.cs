@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace NWPCore
 {
     /// <summary>
-    /// 场景基类
+    /// 精灵基类
     /// </summary>
-    public class SceneBase
+    public class SpiritBase
     {
         public string ID;
 
