@@ -9,6 +9,8 @@ namespace NWPCore
     public class GameManager
     {
         public GameState State;
+
+        public Player Player;
     }
 
     public enum GameState
@@ -16,5 +18,6 @@ namespace NWPCore
         Beginning,
         MainMenu,
         CreatPlayer,
+        Intro
     }
 }

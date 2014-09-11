@@ -46,7 +46,7 @@ namespace NWPClient.ViewModel
                     m_GM = value;
                     RaisePropertyChanged(() => GM);
                 }
-            } 
+            }
         }
 
         public MainWindow UI { get; set; }
@@ -82,10 +82,12 @@ namespace NWPClient.ViewModel
             UI.scrollViewer.ScrollToBottom();
         }
 
-        public void CommandExcute(string command,LogType type)
+        public void CommandExcute(string command, LogType type)
         {
-            PrintLog(command, type);
-
+            if (!String.IsNullOrEmpty(command))
+            {
+                PrintLog(command, type);
+            }
             switch (GM.State)
             {
                 case GameState.MainMenu:
@@ -93,6 +95,9 @@ namespace NWPClient.ViewModel
                     break;
                 case GameState.CreatPlayer:
                     CreatPlayer(command);
+                    break;
+                case GameState.Intro:
+                    Intro(command);
                     break;
             }
         }
@@ -117,7 +122,40 @@ namespace NWPClient.ViewModel
 
         public void CreatPlayer(string command)
         {
- 
+            switch (command)
+            {
+                case "":
+                    PrintLog("姓名不能为空", LogType.ERROR);
+                    break;
+                default:
+                    GM.Player = new Player();
+                    GM.Player.Name = command;
+                    string log = "你好" + GM.Player.Name + "\r\n我是游戏引导员，此刻我本该说一些游戏背景介绍啊，新手引导啊之类的话";
+                    PrintLog(log, LogType.SYSTEM);
+                    GM.State = GameState.Intro;
+                    break;
+            }
+        }
+
+        private int introTick = 0;
+        public void Intro(string command)
+        {
+            string log = "";
+            switch (introTick)
+            {
+                case 0:
+                    log = "但是游戏开发着只做到这里，后面他还在想怎么做";
+                    PrintLog(log, LogType.SYSTEM);
+                    break;
+                case 1:
+                    log = "所以就没有然后了，你可以退出游戏了\r\n恭喜你" + GM.Player.Name + "，你通关了！";
+                    PrintLog(log, LogType.SYSTEM);
+                    break;
+                default:
+                    break;
+            }
+            introTick++;
+
         }
         #endregion
     }
