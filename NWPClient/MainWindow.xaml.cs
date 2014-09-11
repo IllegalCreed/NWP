@@ -26,7 +26,7 @@ namespace NWPClient
         {
             InitializeComponent();
 
-            MWVM = new MainWindowViewModel();
+            MWVM = new MainWindowViewModel(this);
             this.DataContext = MWVM;
         }
 

@@ -48,11 +48,14 @@ namespace NWPClient.ViewModel
                 }
             } 
         }
+
+        public MainWindow UI { get; set; }
         #endregion
 
         #region 构造
-        public MainWindowViewModel()
+        public MainWindowViewModel(MainWindow ui)
         {
+            UI = ui;
             Logs = new ObservableCollection<LogViewModel>();
             InitGM();
         }
@@ -76,6 +79,7 @@ namespace NWPClient.ViewModel
             LVM.Text = command;
             LVM.Type = type;
             Logs.Add(LVM);
+            UI.scrollViewer.ScrollToBottom();
         }
 
         public void CommandExcute(string command,LogType type)
@@ -87,6 +91,9 @@ namespace NWPClient.ViewModel
                 case GameState.MainMenu:
                     MainMenuExcute(command);
                     break;
+                case GameState.CreatPlayer:
+                    CreatPlayer(command);
+                    break;
             }
         }
 
@@ -97,6 +104,7 @@ namespace NWPClient.ViewModel
                 case "start":
                     string log = "欢迎来到科科的世界\r\n首先你要为你的角色起一个名字";
                     PrintLog(log, LogType.SYSTEM);
+                    GM.State = GameState.CreatPlayer;
                     break;
                 case "exit":
                     Application.Current.Shutdown();
@@ -105,6 +113,11 @@ namespace NWPClient.ViewModel
                     PrintLog("指令错误", LogType.ERROR);
                     break;
             }
+        }
+
+        public void CreatPlayer(string command)
+        {
+ 
         }
         #endregion
     }
