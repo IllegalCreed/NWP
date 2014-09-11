@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NWPClient.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,22 @@ namespace NWPClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainWindowViewModel MWVM;
         public MainWindow()
         {
             InitializeComponent();
+
+            MWVM = new MainWindowViewModel();
+            this.DataContext = MWVM;
+        }
+
+        private void Command_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                MWVM.CommandExcute(Command.Text,LogType.PLAYER);
+                Command.Text = "";
+            }
         }
     }
 }
