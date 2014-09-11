@@ -133,6 +133,7 @@ namespace NWPClient.ViewModel
                     string log = "你好" + GM.Player.Name + "\r\n我是游戏引导员，此刻我本该说一些游戏背景介绍啊，新手引导啊之类的话";
                     PrintLog(log, LogType.SYSTEM);
                     GM.State = GameState.Intro;
+                    introTick = 0;
                     break;
             }
         }
