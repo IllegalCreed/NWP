@@ -108,6 +108,12 @@
   <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NWPCore\NWPCore.csproj">
+      <Project>{66f1fb9e-2938-4844-81e2-6e6331a1b9e5}</Project>
+      <Name>NWPCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
