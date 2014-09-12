@@ -12,6 +12,7 @@ namespace NWPCore
         public GameManager()
         {
             StatesDictionary = new Dictionary<string, GameState>();
+            MapDictionary = new Dictionary<string, Map>();
             Player = new Player();
         }
         #endregion
@@ -36,9 +37,29 @@ namespace NWPCore
 
         public Dictionary<string, GameState> StatesDictionary;
 
+        private string m_CurrentMap;
+        public string CurrentMap
+        {
+            get
+            {
+                return m_CurrentMap;
+            }
+            set
+            {
+                if (value != m_CurrentMap)
+                {
+                    m_CurrentMap = value;
+                    MapChanged(MapDictionary[m_CurrentMap]);
+                }
+            }
+        }
+
+        public Dictionary<string, Map> MapDictionary;
+
         public Player Player;
 
         public event Action<GameState> GameStateChanged;
+        public event Action<Map> MapChanged;
         #endregion
 
         #region 方法
@@ -56,12 +77,4 @@ namespace NWPCore
         }
         #endregion
     }
-
-    //public enum GameState
-    //{
-    //    Beginning,
-    //    MainMenu,
-    //    CreatPlayer,
-    //    Intro
-    //}
 }

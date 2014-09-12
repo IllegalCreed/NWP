@@ -52,12 +52,24 @@ namespace NWPClient.ViewModel
         {
             GM = DataProvider.Instence.GM;
             GM.GameStateChanged += GM_GameStateChanged;
+            GM.MapChanged += GM_MapChanged;
             GM.CurrentState = "MainMenu";
+        }
+
+        void GM_MapChanged(Map Map)
+        {
+            if (!string.IsNullOrEmpty(Map.Description))
+            {
+                PrintLog(Map.Description, LogType.SYSTEM);
+            }
         }
 
         private void GM_GameStateChanged(GameState GS)
         {
-            PrintLog(GS.Description, LogType.SYSTEM);
+            if (!string.IsNullOrEmpty(GS.Description))
+            {
+                PrintLog(GS.Description, LogType.SYSTEM);
+            }
         }
 
         public void CommandExcute(string command, LogType type)
