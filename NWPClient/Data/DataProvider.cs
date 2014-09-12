@@ -15,10 +15,7 @@ namespace NWPClient.Data
         {
             GM = new GameManager();
             InitGameState();
-<<<<<<< HEAD
-=======
             InitMap();
->>>>>>> origin/master
         }
         public static DataProvider Instence
         {
@@ -27,8 +24,6 @@ namespace NWPClient.Data
 
         public GameManager GM;
 
-<<<<<<< HEAD
-=======
         private void InitMap()
         {
             #region 实验室
@@ -94,7 +89,6 @@ namespace NWPClient.Data
             #endregion
         }
 
->>>>>>> origin/master
         private void InitGameState()
         {
             #region 主菜单
@@ -129,8 +123,6 @@ namespace NWPClient.Data
                 GM.StatesDictionary.Add("Intro", Intro);
             }
             #endregion
-<<<<<<< HEAD
-=======
 
             #region 人物移动
             {
@@ -142,7 +134,6 @@ namespace NWPClient.Data
                 GM.StatesDictionary.Add("Moving", Moving);
             }
             #endregion
->>>>>>> origin/master
         }
 
         private WorkCompleted MainMenuExcute(string command)
@@ -198,22 +189,17 @@ namespace NWPClient.Data
                     result.result = true;
                     result.log = "如果你在怪博士回来之前还没能逃出去则游戏结束，现在，游戏开始！";
                     break;
-<<<<<<< HEAD
-=======
                 case 2:
                     result.result = true;
                     result.nextState = "Moving";
                     GM.CurrentMap = "Lab";
                     break;
->>>>>>> origin/master
                 default:
                     break;
             }
             introTick++;
             return result;
         }
-<<<<<<< HEAD
-=======
 
         private WorkCompleted MovingExcute(string command)
         {
@@ -252,6 +238,5 @@ namespace NWPClient.Data
 
             return result;
         }
->>>>>>> origin/master
     }
 }
