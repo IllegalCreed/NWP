@@ -41,6 +41,10 @@
   <ItemGroup>
     <Compile Include="GameManager.cs" />
     <Compile Include="GameState.cs" />
+<<<<<<< HEAD
+=======
+    <Compile Include="Map.cs" />
+>>>>>>> origin/master
     <Compile Include="Player.cs" />
     <Compile Include="SceneBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
