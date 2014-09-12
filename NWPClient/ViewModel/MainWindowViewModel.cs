@@ -1,5 +1,4 @@
-﻿using NWPClient.Data;
-using NWPCore;
+﻿using NWPCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,9 +32,24 @@ namespace NWPClient.ViewModel
             }
         }
 
-        public MainWindow UI { get; set; }
+        private GameManager m_GM;
+        public GameManager GM
+        {
+            get
+            {
+                return m_GM;
+            }
+            set
+            {
+                if (value != m_GM)
+                {
+                    m_GM = value;
+                    RaisePropertyChanged(() => GM);
+                }
+            }
+        }
 
-        private GameManager GM{ get; set; }
+        public MainWindow UI { get; set; }
         #endregion
 
         #region 构造
@@ -50,38 +64,13 @@ namespace NWPClient.ViewModel
         #region 方法
         public void InitGM()
         {
-            GM = DataProvider.Instence.GM;
-            GM.GameStateChanged += GM_GameStateChanged;
-            GM.CurrentState = "MainMenu";
-        }
+            GM = new GameManager();
+            GM.State = GameState.Beginning;
 
-        private void GM_GameStateChanged(GameState GS)
-        {
-            PrintLog(GS.Description, LogType.SYSTEM);
-        }
+            string command = "科科历险记\r\n\r\n开始游戏(COMMAND=start)\r\n退出游戏(COMMAND=exit)";
+            PrintLog(command, LogType.SYSTEM);
 
-        public void CommandExcute(string command, LogType type)
-        {
-            if (!String.IsNullOrEmpty(command))
-            {
-                PrintLog(command, type);
-            }
-
-            WorkCompleted result = GM.Excute(command);
-            if (result.result == false && !string.IsNullOrEmpty(result.log))
-            {
-                PrintLog(result.log, LogType.ERROR);
-            }
-            else if (result.result == true && !string.IsNullOrEmpty(result.log))
-            {
-                PrintLog(result.log, LogType.SYSTEM);
-            }
-
-            if (!string.IsNullOrEmpty(result.nextState))
-            {
-                GM.CurrentState = result.nextState;
-            }
-
+            GM.State = GameState.MainMenu;
         }
 
         public void PrintLog(string command, LogType type)
@@ -91,6 +80,83 @@ namespace NWPClient.ViewModel
             LVM.Type = type;
             Logs.Add(LVM);
             UI.scrollViewer.ScrollToBottom();
+        }
+
+        public void CommandExcute(string command, LogType type)
+        {
+            if (!String.IsNullOrEmpty(command))
+            {
+                PrintLog(command, type);
+            }
+            switch (GM.State)
+            {
+                case GameState.MainMenu:
+                    MainMenuExcute(command);
+                    break;
+                case GameState.CreatPlayer:
+                    CreatPlayer(command);
+                    break;
+                case GameState.Intro:
+                    Intro(command);
+                    break;
+            }
+        }
+
+        public void MainMenuExcute(string command)
+        {
+            switch (command)
+            {
+                case "start":
+                    string log = "欢迎来到科科的世界\r\n首先你要为你的角色起一个名字";
+                    PrintLog(log, LogType.SYSTEM);
+                    GM.State = GameState.CreatPlayer;
+                    break;
+                case "exit":
+                    Application.Current.Shutdown();
+                    break;
+                default:
+                    PrintLog("指令错误", LogType.ERROR);
+                    break;
+            }
+        }
+
+        public void CreatPlayer(string command)
+        {
+            switch (command)
+            {
+                case "":
+                    PrintLog("姓名不能为空", LogType.ERROR);
+                    break;
+                default:
+                    GM.Player = new Player();
+                    GM.Player.Name = command;
+                    string log = "你好" + GM.Player.Name + "\r\n我是游戏引导员，此刻我本该说一些游戏背景介绍啊，新手引导啊之类的话";
+                    PrintLog(log, LogType.SYSTEM);
+                    GM.State = GameState.Intro;
+                    introTick = 0;
+                    break;
+            }
+        }
+
+        private int introTick = 0;
+        public void Intro(string command)
+        {
+            string log = "";
+            switch (introTick)
+            {
+                case 0:
+                    log = "但是游戏开发着只做到这里，后面他还在想怎么做";
+                    PrintLog(log, LogType.SYSTEM);
+                    break;
+                case 1:
+                    log = "所以就没有然后了，你可以退出游戏了\r\n恭喜你" + GM.Player.Name + "，你通关了！";
+                    PrintLog(log, LogType.SYSTEM);
+                    break;
+                default:
+                    break;
+            }
+            introTick++;
+
         }
         #endregion
     }
