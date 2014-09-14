@@ -18,6 +18,7 @@ namespace NWPCore
         #endregion
 
         #region 属性
+        public Dictionary<string, GameState> StatesDictionary;
         private string m_CurrentState;
         public string CurrentState
         {
@@ -29,14 +30,38 @@ namespace NWPCore
             {
                 if (value != m_CurrentState)
                 {
+                    if (m_CurrentState != null && StatesDictionary.ContainsKey(m_CurrentState))
+                    {
+                        WorkCompleted result;
+                        if (StatesDictionary[m_CurrentState].AfterWork != null)
+                        {
+                            result = StatesDictionary[m_CurrentState].AfterWork(StatesDictionary[m_CurrentState]);
+                            if (WorkCompleted != null)
+                            {
+                                WorkCompleted(result);
+                            }
+                        }
+                    }
+
                     m_CurrentState = value;
-                    GameStateChanged(StatesDictionary[m_CurrentState]);
+
+                    if (m_CurrentState != null && StatesDictionary.ContainsKey(m_CurrentState))
+                    {
+                        WorkCompleted result;
+                        if (StatesDictionary[m_CurrentState].BeforeWork != null)
+                        {
+                            result = StatesDictionary[m_CurrentState].BeforeWork(StatesDictionary[m_CurrentState]);
+                            if (WorkCompleted != null)
+                            {
+                                WorkCompleted(result);
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        public Dictionary<string, GameState> StatesDictionary;
-
+        public Dictionary<string, Map> MapDictionary;
         private string m_CurrentMap;
         public string CurrentMap
         {
@@ -48,33 +73,57 @@ namespace NWPCore
             {
                 if (value != m_CurrentMap)
                 {
+                    if (m_CurrentMap != null && MapDictionary.ContainsKey(m_CurrentMap))
+                    {
+                        WorkCompleted result;
+                        if (MapDictionary[m_CurrentMap].AfterWork != null)
+                        {
+                            result = MapDictionary[m_CurrentMap].AfterWork(MapDictionary[m_CurrentMap]);
+                            if (WorkCompleted != null)
+                            {
+                                WorkCompleted(result);
+                            }
+                        }
+                    }
+
                     m_CurrentMap = value;
-                    MapChanged(MapDictionary[m_CurrentMap]);
+
+                    if (m_CurrentMap != null && MapDictionary.ContainsKey(m_CurrentMap))
+                    {
+                        WorkCompleted result;
+                        if (MapDictionary[m_CurrentMap].BeforeWork != null)
+                        {
+                            result = MapDictionary[m_CurrentMap].BeforeWork(MapDictionary[m_CurrentMap]);
+                            if (WorkCompleted != null)
+                            {
+                                WorkCompleted(result);
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        public Dictionary<string, Map> MapDictionary;
 
         public Player Player;
-
-        public event Action<GameState> GameStateChanged;
-
-        public event Action<Map> MapChanged;
+        public event Action<WorkCompleted> WorkCompleted;
         #endregion
 
         #region 方法
-        public WorkCompleted Excute(string command)
+        public void Excute(string command)
         {
-            WorkCompleted result = null;
-
-            if(StatesDictionary.ContainsKey(CurrentState))
+            if (m_CurrentState != null && StatesDictionary.ContainsKey(m_CurrentState))
             {
-                GameState currentstate = StatesDictionary[CurrentState];
-                result = currentstate.Dowork(command);
+                WorkCompleted result;
+                if (StatesDictionary[m_CurrentState].DoWork != null)
+                {
+                    result = StatesDictionary[m_CurrentState].DoWork(command, StatesDictionary[m_CurrentState]);
+                    if (WorkCompleted != null)
+                    {
+                        WorkCompleted(result);
+                    }
+                }
             }
-
-            return result;
         }
         #endregion
     }

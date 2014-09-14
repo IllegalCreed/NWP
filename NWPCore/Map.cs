@@ -13,6 +13,14 @@ namespace NWPCore
             OtherMap = new Dictionary<string, string>();
         }
 
+        public Func<Map, WorkCompleted> BeforeWork;
+
+        public Func<String, Map, WorkCompleted> DoWork;
+
+        public Func<Map, WorkCompleted> AfterWork;
+
+        public bool IsFound;
+
         public Dictionary<string, string> OtherMap;
     }
 }

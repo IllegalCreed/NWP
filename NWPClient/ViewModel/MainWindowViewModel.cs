@@ -51,35 +51,13 @@ namespace NWPClient.ViewModel
         public void InitGM()
         {
             GM = DataProvider.Instence.GM;
-            GM.GameStateChanged += GM_GameStateChanged;
-            GM.MapChanged += GM_MapChanged;
+            GM.WorkCompleted += GM_WorkCompleted;
             GM.CurrentState = "MainMenu";
         }
 
-        void GM_MapChanged(Map Map)
+        void GM_WorkCompleted(WorkCompleted result)
         {
-            if (!string.IsNullOrEmpty(Map.Description))
-            {
-                PrintLog(Map.Description, LogType.SYSTEM);
-            }
-        }
-
-        private void GM_GameStateChanged(GameState GS)
-        {
-            if (!string.IsNullOrEmpty(GS.Description))
-            {
-                PrintLog(GS.Description, LogType.SYSTEM);
-            }
-        }
-
-        public void CommandExcute(string command, LogType type)
-        {
-            if (!String.IsNullOrEmpty(command))
-            {
-                PrintLog(command, type);
-            }
-
-            WorkCompleted result = GM.Excute(command);
+            //根据返回值执行显示
             if (result.result == false && !string.IsNullOrEmpty(result.log))
             {
                 PrintLog(result.log, LogType.ERROR);
@@ -88,12 +66,18 @@ namespace NWPClient.ViewModel
             {
                 PrintLog(result.log, LogType.SYSTEM);
             }
+        }
 
-            if (!string.IsNullOrEmpty(result.nextState))
+        public void CommandExcute(string command)
+        {
+            //打印用户命令
+            if (!String.IsNullOrEmpty(command))
             {
-                GM.CurrentState = result.nextState;
+                PrintLog(command, LogType.PLAYER);
             }
 
+            //调用GM处理命令
+            GM.Excute(command);
         }
 
         public void PrintLog(string command, LogType type)

@@ -34,7 +34,7 @@ namespace NWPClient
         {
             if (e.Key == Key.Enter)
             {
-                MWVM.CommandExcute(Command.Text,LogType.PLAYER);
+                MWVM.CommandExcute(Command.Text);
                 Command.Text = "";
             }
         }
