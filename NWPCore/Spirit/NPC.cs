@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NWPCore
 {
-    class NPC
+    public class NPC : Spirit
     {
     }
 }

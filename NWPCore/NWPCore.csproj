@@ -39,15 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameManager.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="NPC.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="SceneBase.cs" />
+    <Compile Include="Scene\Place.cs" />
+    <Compile Include="Manage\GameManager.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="Manage\GameState.cs" />
+    <Compile Include="Spirit\Item.cs" />
+    <Compile Include="Spirit\NPC.cs" />
+    <Compile Include="Spirit\Player.cs" />
+    <Compile Include="Scene\Scene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpiritBase.cs" />
-    <Compile Include="TaskBase.cs" />
+    <Compile Include="Spirit\Spirit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

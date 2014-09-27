@@ -9,12 +9,7 @@ namespace NWPCore
     /// <summary>
     /// 精灵基类
     /// </summary>
-    public class SpiritBase
+    public class Spirit : GameObject
     {
-        public string ID;
-
-        public string Name;
-
-        public string Description;
     }
 }

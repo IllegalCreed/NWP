@@ -12,8 +12,10 @@ namespace NWPCore
         public GameManager()
         {
             StatesDictionary = new Dictionary<string, GameState>();
-            MapDictionary = new Dictionary<string, Map>();
-            Player = new Player();
+            MapDictionary = new Dictionary<string, Scene>();
+            ItemDictionary = new Dictionary<string, Item>();
+            ItemNameToIDDictionary = new Dictionary<string, string>();
+            Player = new Player(this);
         }
         #endregion
 
@@ -61,7 +63,7 @@ namespace NWPCore
             }
         }
 
-        public Dictionary<string, Map> MapDictionary;
+        public Dictionary<string, Scene> MapDictionary;
         private string m_CurrentMap;
         public string CurrentMap
         {
@@ -104,6 +106,8 @@ namespace NWPCore
             }
         }
 
+        public Dictionary<string, Item> ItemDictionary;
+        public Dictionary<string, string> ItemNameToIDDictionary;
 
         public Player Player;
         public event Action<WorkCompleted> WorkCompleted;

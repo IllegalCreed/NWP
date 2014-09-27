@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace NWPCore
 {
-    public class TaskBase
+    public class GameObject
     {
         public string ID;
 
         public string Name;
 
         public string Description;
+
+        public Object Data;
     }
 }

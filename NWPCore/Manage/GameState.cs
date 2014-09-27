@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NWPCore
 {
-    public class GameState : TaskBase
+    public class GameState : GameObject
     {
         public GameState()
         {
@@ -18,8 +18,6 @@ namespace NWPCore
         public Func<String, GameState, WorkCompleted> DoWork;
 
         public Func<GameState, WorkCompleted> AfterWork;
-
-        public Object Data;
     }
 
     public class WorkCompleted
