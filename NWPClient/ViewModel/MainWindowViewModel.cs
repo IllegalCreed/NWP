@@ -33,8 +33,14 @@ namespace NWPClient.ViewModel
             }
         }
 
+        /// <summary>
+        /// 主窗口UI根节点
+        /// </summary>
         public MainWindow UI { get; set; }
 
+        /// <summary>
+        /// 游戏管理器
+        /// </summary>
         private GameManager GM{ get; set; }
         #endregion
 
@@ -48,6 +54,9 @@ namespace NWPClient.ViewModel
         #endregion
 
         #region 方法
+        /// <summary>
+        /// 初始化游戏管理器
+        /// </summary>
         public void InitGM()
         {
             GM = DataProvider.Instence.GM;
@@ -55,6 +64,10 @@ namespace NWPClient.ViewModel
             GM.CurrentState = "MainMenu";
         }
 
+        /// <summary>
+        /// 打印游戏管理器返回的日志
+        /// </summary>
+        /// <param name="result">日志</param>
         void GM_WorkCompleted(WorkCompleted result)
         {
             //根据返回值执行显示
@@ -68,6 +81,10 @@ namespace NWPClient.ViewModel
             }
         }
 
+        /// <summary>
+        /// 执行命令
+        /// </summary>
+        /// <param name="command">命令</param>
         public void CommandExcute(string command)
         {
             //打印用户命令
@@ -80,6 +97,11 @@ namespace NWPClient.ViewModel
             GM.Excute(command);
         }
 
+        /// <summary>
+        /// 打印日志
+        /// </summary>
+        /// <param name="command">日志内容</param>
+        /// <param name="type">日志类型</param>
         public void PrintLog(string command, LogType type)
         {
             LogViewModel LVM = new LogViewModel();

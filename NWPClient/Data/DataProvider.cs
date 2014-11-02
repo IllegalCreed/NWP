@@ -422,6 +422,7 @@ namespace NWPClient.Data
                     result.log += "MAP 查看已探索的传送点\r\n";
                     result.log += "USE/物品/地点 对场景内物品或人物或地点使用物品\r\n";
                     result.log += "USE/物品/自己 或 USE/物品 对自己使用物品\r\n";
+                    result.log += "FIND/地点 搜索指定地点";
                     break;
                 default:
                     if (GM.MapDictionary[GM.CurrentMap].DoWork != null)
